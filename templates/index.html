@@ -69,6 +69,11 @@
                         </div>
                     </div>
 
+                    <!-- Theme Toggle Switch -->
+                    <button id="themeToggleBtn" class="pill pill-theme" title="Toggle Light / Dark Mode">
+                        <span id="themeToggleIcon">☀️</span> <span id="themeToggleText">Light Mode</span>
+                    </button>
+
                     <!-- Refresh Button with Loading Spinner -->
                     <button id="refreshBtn" class="btn btn-primary btn-refresh" title="Refresh Live BigQuery Release Notes">
                         <svg class="refresh-spinner-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -114,7 +119,7 @@
                         </select>
                     </div>
 
-                    <!-- Sorting & View Mode -->
+                    <!-- Sorting & Actions -->
                     <div class="filter-group right-aligned">
                         <select id="sortSelect" class="custom-select">
                             <option value="NEWEST">Newest First</option>
@@ -126,6 +131,16 @@
                                 ⭐ Bookmarks (<span id="bookmarkCount">0</span>)
                             </button>
                         </div>
+
+                        <!-- Export to CSV Button -->
+                        <button id="exportCsvBtn" class="btn btn-secondary btn-sm" title="Export currently filtered release notes to CSV file">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Export CSV
+                        </button>
                     </div>
                 </div>
             </section>

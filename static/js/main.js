@@ -431,8 +431,43 @@ document.addEventListener('DOMContentLoaded', () => {
         applyFiltersAndRender();
     }
 
-    // Setup Event Listeners
-    function setupEventListeners() {
+        // Theme Toggle Button
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+
+        let currentTheme = localStorage.getItem('bq_theme') || 'dark';
+        applyTheme(currentTheme);
+
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('bq_theme', theme);
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+                document.body.classList.remove('dark-theme');
+                if (themeToggleIcon) themeToggleIcon.textContent = '🌙';
+                if (themeToggleText) themeToggleText.textContent = 'Dark Mode';
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                if (themeToggleIcon) themeToggleIcon.textContent = '☀️';
+                if (themeToggleText) themeToggleText.textContent = 'Light Mode';
+            }
+        }
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+                showToast(`Switched to ${currentTheme} mode`);
+            });
+        }
+
+        // Export to CSV Button
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        if (exportCsvBtn) {
+            exportCsvBtn.addEventListener('click', exportToCsv);
+        }
+
         // Refresh Button
         refreshBtn.addEventListener('click', () => fetchReleaseNotes(true));
 
@@ -499,6 +534,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeTweetModal();
             }
         });
+    }
+
+    // Export CSV Function
+    function exportToCsv() {
+        if (!filteredUpdates || filteredUpdates.length === 0) {
+            showToast("No release notes to export!", "error");
+            return;
+        }
+
+        const headers = ["Date", "Category", "Headline", "Summary", "Topics", "Official Link"];
+        const rows = filteredUpdates.map(u => [
+            u.date,
+            u.category,
+            u.headline,
+            u.summary,
+            (u.tags || []).join('; '),
+            u.link
+        ]);
+
+        const csvContent = [
+            headers.map(h => `"${h.replace(/"/g, '""')}"`).join(','),
+            ...rows.map(row => row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `bigquery-release-notes-${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showToast(`Exported ${filteredUpdates.length} updates to CSV!`);
     }
 
     // Helper: Copy to Clipboard

@@ -44,7 +44,7 @@
     padding: 0;
 }
 
-body.dark-theme {
+body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
     font-family: var(--font-body);
@@ -52,6 +52,55 @@ body.dark-theme {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme Override */
+body.light-theme {
+    --bg-dark: #f8fafc;
+    --bg-card: rgba(255, 255, 255, 0.88);
+    --bg-card-hover: rgba(241, 245, 249, 0.95);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color-hover: rgba(56, 189, 248, 0.45);
+
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.12);
+}
+
+body.light-theme .glow-orb {
+    opacity: 0.15;
+}
+
+body.light-theme .search-box {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+body.light-theme .custom-select {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+body.light-theme .brand-icon {
+    background: #ffffff;
+}
+
+body.light-theme .pill {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.pill-theme {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.btn-sm {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.825rem;
 }
 
 /* Background Ambient Orbs */
